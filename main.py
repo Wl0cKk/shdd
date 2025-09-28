@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.properties import StringProperty
+from kivy.graphics import RoundedRectangle, Line
 from kivy.clock import Clock
 
 class ShddApp(App):
