@@ -1,0 +1,95 @@
+BoxLayout:
+    orientation: 'vertical'
+    padding: 10
+    spacing: 2
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        text: 'shdd'
+        font_size: '32sp'
+        bold: True
+        color: 0.95, 0.3, 0.3, 1
+        size_hint_y: 0.15
+
+    Label:
+        text: 'YouTube Video Downloader'
+        font_size: '14sp'
+        color: 0.7, 0.7, 0.8, 1
+        size_hint_y: 0.05
+
+    RoundedUrlInput:
+        id: url_input
+        size_hint_y: 0.04
+        hint_text: 'Paste YouTube URL here...'
+
+    Label:
+        text: app.status_text
+        font_size: '12sp'
+        color: 0.6, 0.8, 0.7, 1
+        size_hint_y: 0.08
+        text_size: self.width, None
+        halign: 'center'
+
+    BoxLayout:
+        size_hint_y: 0.04
+        padding: [40, 0]
+        Widget:
+            size_hint_x: 0.2
+        RoundedButton:
+            text: 'Download'
+            size_hint_x: 0.6
+            size_hint_y: 1
+            on_press: app.download_short()
+            bg_color: 0.95, 0.3, 0.3, 1
+            font_size: '18sp'
+        Widget:
+            size_hint_x: 0.2
+
+<RoundedButton@Button>:
+    bg_color: 0.95, 0.3, 0.3, 1
+    background_normal: ''
+    background_color: 0, 0, 0, 0
+    color: 1, 1, 1, 1
+    font_size: '18sp'
+    bold: True
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15]
+        Color:
+            rgba: 0, 0, 0, 0.2
+        RoundedRectangle:
+            pos: self.pos[0], self.pos[1] - 2
+            size: self.size
+            radius: [15]
+
+<RoundedUrlInput@TextInput>:
+    background_color: 0, 0, 0, 0
+    foreground_color: 1, 1, 1, 1
+    hint_text_color: 0.7, 0.7, 0.7, 1
+    multiline: False
+    font_size: '18sp'
+    bold: True
+    cursor_color: 1, 1, 1, 1
+    selection_color: 0.95, 0.3, 0.3, 0.5
+    padding: [20, 18]
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.2, 0.25, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+        Color:
+            rgba: 0.95, 0.3, 0.3, 0.3
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 12]
+            width: 2
