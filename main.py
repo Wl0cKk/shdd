@@ -1,10 +1,17 @@
 from kivy.app import App
 from kivy.properties import StringProperty
-from kivy.graphics import RoundedRectangle, Line
+from kivy.core.window import Window
 from kivy.clock import Clock
 
 class ShddApp(App):
-    status_text = StringProperty("Paste YouTube URL")
+    status_text = StringProperty('')
+    
+    def on_start(self):
+        Window.size = (400, 600)
+        Window.minimum_width = 400
+        Window.minimum_height = 600
+        Window.maximum_width = 400
+        Window.maximum_height = 600
     
     def download_short(self):
         url = self.root.ids.url_input.text

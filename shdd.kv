@@ -1,7 +1,7 @@
 BoxLayout:
     orientation: 'vertical'
-    padding: 10
-    spacing: 2
+    padding: 20
+    spacing: 10
     canvas.before:
         Color:
             rgba: 0.1, 0.1, 0.1, 1
@@ -9,87 +9,93 @@ BoxLayout:
             pos: self.pos
             size: self.size
 
-    Label:
-        text: 'shdd'
-        font_size: '32sp'
-        bold: True
-        color: 0.95, 0.3, 0.3, 1
+    # Title section
+    BoxLayout:
+        orientation: 'vertical'
         size_hint_y: 0.15
+        
+        Label:
+            text: 'shdd'
+            font_size: '32sp'
+            bold: True
+            color: 0.95, 0.3, 0.3, 1
 
+    # Centered subtitle
     Label:
         text: 'YouTube Video Downloader'
         font_size: '14sp'
         color: 0.7, 0.7, 0.8, 1
         size_hint_y: 0.05
 
-    RoundedUrlInput:
+    # Spacer to push content down
+    Widget:
+        size_hint_y: 0.25
+
+    # URL input
+    UrlInput:
         id: url_input
-        size_hint_y: 0.04
+        size_hint_y: 0.1
         hint_text: 'Paste YouTube URL here...'
 
+    # Status label
     Label:
+        id: status_label
         text: app.status_text
-        font_size: '12sp'
+        font_size: '13sp'
         color: 0.6, 0.8, 0.7, 1
-        size_hint_y: 0.08
+        size_hint_y: 0.05
         text_size: self.width, None
         halign: 'center'
 
-    BoxLayout:
-        size_hint_y: 0.04
-        padding: [40, 0]
-        Widget:
-            size_hint_x: 0.2
-        RoundedButton:
-            text: 'Download'
-            size_hint_x: 0.6
-            size_hint_y: 1
-            on_press: app.download_short()
-            bg_color: 0.95, 0.3, 0.3, 1
-            font_size: '18sp'
-        Widget:
-            size_hint_x: 0.2
+    # Big spacer to push button very low (thumb-friendly position)
+    Widget:
+        size_hint_y: 0.3
 
-<RoundedButton@Button>:
-    bg_color: 0.95, 0.3, 0.3, 1
-    background_normal: ''
+    # Download button positioned low for easy thumb access
+    DownloadButton:
+        text: 'Download'
+        on_press: app.download_short()
+        size_hint: 0.55, 0.12
+        pos_hint: {'center_x': 0.5}
+
+    # Bottom spacer
+    Widget:
+        size_hint_y: 0.1
+
+<UrlInput@TextInput>:
+    background_color: 0.15, 0.15, 0.2, 1
+    foreground_color: 1, 1, 1, 1
+    hint_text_color: 0.5, 0.5, 0.6, 1
+    cursor_color: 0.95, 0.3, 0.3, 1
+    selection_color: 0.95, 0.3, 0.3, 0.3
+    font_size: '16sp'
+    padding: [15, 10]
+    multiline: False
+    
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.3, 0.3, 0.5 if self.focus else 0.3
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 8]
+            width: 2
+
+<DownloadButton@Button>:
     background_color: 0, 0, 0, 0
     color: 1, 1, 1, 1
-    font_size: '18sp'
+    font_size: '16sp'
     bold: True
+    
     canvas.before:
         Color:
-            rgba: self.bg_color
+            rgba: 0.95, 0.3, 0.3, 1
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [15]
+            radius: [25]
+        
         Color:
-            rgba: 0, 0, 0, 0.2
-        RoundedRectangle:
-            pos: self.pos[0], self.pos[1] - 2
-            size: self.size
-            radius: [15]
-
-<RoundedUrlInput@TextInput>:
-    background_color: 0, 0, 0, 0
-    foreground_color: 1, 1, 1, 1
-    hint_text_color: 0.7, 0.7, 0.7, 1
-    multiline: False
-    font_size: '18sp'
-    bold: True
-    cursor_color: 1, 1, 1, 1
-    selection_color: 0.95, 0.3, 0.3, 0.5
-    padding: [20, 18]
-    canvas.before:
-        Color:
-            rgba: 0.2, 0.2, 0.25, 1
+            rgba: 0, 0, 0, 0.2 if self.state == 'down' else 0
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [12]
-        Color:
-            rgba: 0.95, 0.3, 0.3, 0.3
-        Line:
-            rounded_rectangle: [self.x, self.y, self.width, self.height, 12]
-            width: 2
+            radius: [25]
