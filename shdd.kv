@@ -1,0 +1,112 @@
+BoxLayout:
+    orientation: 'vertical'
+    padding: dp(20) 
+    spacing: dp(10)
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: dp(60)
+        
+        Label:
+            text: 'shdd'
+            font_size: dp(32)
+            bold: True
+            color: 0.95, 0.3, 0.3, 1
+            text_size: self.width, None
+            halign: 'center'
+            valign: 'middle'
+
+    Label:
+        text: 'YouTube Video Downloader'
+        font_size: dp(16)  # Slightly larger for mobile
+        color: 0.7, 0.7, 0.8, 1
+        size_hint_y: None
+        height: dp(30)
+        text_size: self.width, None
+        halign: 'center'
+        valign: 'middle'
+
+    Widget:
+        size_hint_y: 0.1
+
+    UrlInput:
+        id: url_input
+        size_hint_y: None
+        height: dp(50)
+        hint_text: 'Paste YouTube URL here...'
+        padding: [dp(15), dp(15)]
+
+    Label:
+        id: status_label
+        text: app.status_text
+        font_size: dp(14)
+        color: 0.6, 0.8, 0.7, 1
+        size_hint_y: None
+        height: dp(30)
+        text_size: self.width, None
+        halign: 'center'
+        valign: 'middle'
+
+    Widget:
+        size_hint_y: 0.2
+
+    DownloadButton:
+        text: 'Download'
+        on_press: app.download_short()
+        size_hint: 0.8, None
+        height: dp(50)
+        pos_hint: {'center_x': 0.5}
+        padding: [dp(20), dp(15)]
+
+    # Bottom spacer
+    Widget:
+        size_hint_y: 0.1
+
+<UrlInput@TextInput>:
+    background_color: 0.15, 0.15, 0.2, 1
+    foreground_color: 1, 1, 1, 1
+    hint_text_color: 0.5, 0.5, 0.6, 1
+    cursor_color: 0.95, 0.3, 0.3, 1
+    selection_color: 0.95, 0.3, 0.3, 0.3
+    font_size: dp(18)  # Slightly larger for mobile
+    multiline: False
+    padding: [dp(15), dp(15)]
+    size_hint_y: None
+    height: dp(50)
+    
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.3, 0.3, 0.5 if self.focus else 0.3
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, dp(8)]
+            width: dp(2)
+
+<DownloadButton@Button>:
+    background_color: 0, 0, 0, 0
+    color: 1, 1, 1, 1
+    font_size: dp(20)  # Slightly larger for mobile
+    bold: True
+    size_hint_y: None
+    height: dp(50)
+    
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.3, 0.3, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(25)]
+        
+        Color:
+            rgba: 0, 0, 0, 0.2 if self.state == 'down' else 0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(25)]
