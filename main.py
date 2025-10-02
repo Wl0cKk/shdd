@@ -25,7 +25,7 @@ class ShddApp(App):
             self.status_text = "Please enter a URL first!"
             return
         if not is_youtube_video_link(url):
-            self.status_text = "Invalid YouTube URL! Please check your link."
+            self.status_text = "Please check your link."
             return
             
         self.status_text = "Downloading..."
