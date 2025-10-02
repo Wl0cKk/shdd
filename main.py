@@ -2,16 +2,17 @@ from kivy.app import App
 from kivy.properties import StringProperty
 from kivy.core.window import Window
 from kivy.clock import Clock
+from kivy.utils import platform
+from kivy.metrics import dp
 
 class ShddApp(App):
     status_text = StringProperty('')
     
     def on_start(self):
-        Window.size = (400, 600)
-        Window.minimum_width = 400
-        Window.minimum_height = 600
-        Window.maximum_width = 400
-        Window.maximum_height = 600
+        if platform in ['win', 'linux', 'macosx', 'darwin', 'unknown']:
+            Window.size = (400, 600)
+            Window.minimum_width = 400
+            Window.minimum_height = 600
     
     def download_short(self):
         url = self.root.ids.url_input.text

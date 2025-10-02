@@ -1,7 +1,7 @@
 BoxLayout:
     orientation: 'vertical'
-    padding: 20
-    spacing: 10
+    padding: dp(20) 
+    spacing: dp(10)
     canvas.before:
         Color:
             rgba: 0.1, 0.1, 0.1, 1
@@ -9,54 +9,61 @@ BoxLayout:
             pos: self.pos
             size: self.size
 
-    # Title section
     BoxLayout:
         orientation: 'vertical'
-        size_hint_y: 0.15
+        size_hint_y: None
+        height: dp(60)
         
         Label:
             text: 'shdd'
-            font_size: '32sp'
+            font_size: dp(32)
             bold: True
             color: 0.95, 0.3, 0.3, 1
+            text_size: self.width, None
+            halign: 'center'
+            valign: 'middle'
 
-    # Centered subtitle
     Label:
         text: 'YouTube Video Downloader'
-        font_size: '14sp'
+        font_size: dp(16)  # Slightly larger for mobile
         color: 0.7, 0.7, 0.8, 1
-        size_hint_y: 0.05
+        size_hint_y: None
+        height: dp(30)
+        text_size: self.width, None
+        halign: 'center'
+        valign: 'middle'
 
-    # Spacer to push content down
     Widget:
-        size_hint_y: 0.25
+        size_hint_y: 0.1
 
-    # URL input
     UrlInput:
         id: url_input
-        size_hint_y: 0.1
+        size_hint_y: None
+        height: dp(50)
         hint_text: 'Paste YouTube URL here...'
+        padding: [dp(15), dp(15)]
 
-    # Status label
     Label:
         id: status_label
         text: app.status_text
-        font_size: '13sp'
+        font_size: dp(14)
         color: 0.6, 0.8, 0.7, 1
-        size_hint_y: 0.05
+        size_hint_y: None
+        height: dp(30)
         text_size: self.width, None
         halign: 'center'
+        valign: 'middle'
 
-    # Big spacer to push button very low (thumb-friendly position)
     Widget:
-        size_hint_y: 0.3
+        size_hint_y: 0.2
 
-    # Download button positioned low for easy thumb access
     DownloadButton:
         text: 'Download'
         on_press: app.download_short()
-        size_hint: 0.55, 0.12
+        size_hint: 0.8, None
+        height: dp(50)
         pos_hint: {'center_x': 0.5}
+        padding: [dp(20), dp(15)]
 
     # Bottom spacer
     Widget:
@@ -68,22 +75,26 @@ BoxLayout:
     hint_text_color: 0.5, 0.5, 0.6, 1
     cursor_color: 0.95, 0.3, 0.3, 1
     selection_color: 0.95, 0.3, 0.3, 0.3
-    font_size: '16sp'
-    padding: [15, 10]
+    font_size: dp(18)  # Slightly larger for mobile
     multiline: False
+    padding: [dp(15), dp(15)]
+    size_hint_y: None
+    height: dp(50)
     
     canvas.before:
         Color:
             rgba: 0.95, 0.3, 0.3, 0.5 if self.focus else 0.3
         Line:
-            rounded_rectangle: [self.x, self.y, self.width, self.height, 8]
-            width: 2
+            rounded_rectangle: [self.x, self.y, self.width, self.height, dp(8)]
+            width: dp(2)
 
 <DownloadButton@Button>:
     background_color: 0, 0, 0, 0
     color: 1, 1, 1, 1
-    font_size: '16sp'
+    font_size: dp(20)  # Slightly larger for mobile
     bold: True
+    size_hint_y: None
+    height: dp(50)
     
     canvas.before:
         Color:
@@ -91,11 +102,11 @@ BoxLayout:
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [25]
+            radius: [dp(25)]
         
         Color:
             rgba: 0, 0, 0, 0.2 if self.state == 'down' else 0
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [25]
+            radius: [dp(25)]
