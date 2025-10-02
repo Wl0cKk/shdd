@@ -92,7 +92,7 @@ class ShddApp(App):
             Clock.schedule_once(lambda dt: self.download_error(str(e)))
     
     def download_complete(self, download_path):
-        self.status_text = f"Download completed!\nSaved to: {download_path}"
+        self.status_text = f"Download completed, see your Download folder!\n"
         self.root.ids.url_input.text = ""
         self.safe_button_disable(False)
     
