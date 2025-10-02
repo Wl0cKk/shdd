@@ -30,7 +30,7 @@ class ShddApp(App):
             try:
                 from android.storage import primary_external_storage_path
                 primary_storage = primary_external_storage_path()
-                download_path = os.path.join(primary_storage, 'Pictures', 'Shdd Videos')
+                download_path = os.path.join(primary_storage, 'DCIM', 'Shdd Videos')
                 os.makedirs(download_path, exist_ok=True)
                 test_file = os.path.join(download_path, 'test_write.tmp')
                 with open(test_file, 'w') as f:
