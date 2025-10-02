@@ -30,51 +30,24 @@ class ShddApp(App):
             try:
                 from android.storage import primary_external_storage_path
                 primary_storage = primary_external_storage_path()
-                download_path = os.path.join(primary_storage, 'DCIM', 'Shdd Videos')
-                os.makedirs(download_path, exist_ok=True)
+                download_path = os.path.join(primary_storage, 'Movies')
                 test_file = os.path.join(download_path, 'test_write.tmp')
                 with open(test_file, 'w') as f:
                     f.write('test')
                 os.remove(test_file)
                 
             except (OSError, PermissionError):
-                try:
-                    from jnius import autoclass
-                    Context = autoclass('android.content.Context')
-                    PythonActivity = autoclass('org.kivy.android.PythonActivity')
-                    Environment = autoclass('android.os.Environment')
-                    context = PythonActivity.mActivity
-                    downloads_dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                    download_path = downloads_dir.getAbsolutePath()
-                except:
-                    from jnius import autoclass
-                    Context = autoclass('android.content.Context')
-                    PythonActivity = autoclass('org.kivy.android.PythonActivity')
-                    context = PythonActivity.mActivity
-                    files_dir = context.getExternalFilesDir(None)
-                    download_path = files_dir.getAbsolutePath()
-        
+                from jnius import autoclass
+                Context = autoclass('android.content.Context')
+                PythonActivity = autoclass('org.kivy.android.PythonActivity')
+                context = PythonActivity.mActivity
+                files_dir = context.getExternalFilesDir(None)
+                download_path = files_dir.getAbsolutePath()
         else:
             download_path = os.path.expanduser('~/Downloads')
         
         os.makedirs(download_path, exist_ok=True)
         return download_path
-    
-    def scan_media_file(self, file_path):
-        if platform == 'android':
-            try:
-                from jnius import autoclass
-                Intent = autoclass('android.content.Intent')
-                Context = autoclass('android.content.Context')
-                PythonActivity = autoclass('org.kivy.android.PythonActivity')
-                context = PythonActivity.mActivity
-                media_scan_intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                Uri = autoclass('android.net.Uri')
-                file_uri = Uri.fromFile(autoclass('java.io.File')(file_path))
-                media_scan_intent.setData(file_uri)
-                context.sendBroadcast(media_scan_intent)
-            except Exception as e:
-                print(f"Media scanning failed: {e}")
     
     def safe_button_disable(self, disabled):
         try:
@@ -108,11 +81,7 @@ class ShddApp(App):
             }
             
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=True)
-                downloaded_file = ydl.prepare_filename(info)
-            
-            if platform == 'android':
-                self.scan_media_file(downloaded_file)
+                ydl.download([url])
             
             Clock.schedule_once(lambda dt: self.download_complete(download_path))
             
