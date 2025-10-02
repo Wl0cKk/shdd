@@ -4,6 +4,11 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.utils import platform
 from kivy.metrics import dp
+import re
+
+def is_youtube_video_link(url):
+    pattern = r'(?:https?://)?(?:www\.|m\.)?(?:youtube\.com/(?:watch\?v=|v/|shorts/)|youtu\.be/)[\w-]{11}'
+    return bool(re.search(pattern, url, re.IGNORECASE))
 
 class ShddApp(App):
     status_text = StringProperty('')
@@ -15,9 +20,14 @@ class ShddApp(App):
             Window.minimum_height = 600
     
     def download_short(self):
-        url = self.root.ids.url_input.text
-        if not url.strip():
+        url = self.root.ids.url_input.text.strip()
+        
+        if not url:
             self.status_text = "Please enter a URL first!"
+            return
+        
+        if not is_youtube_video_link(url):
+            self.status_text = "Invalid YouTube URL! Please check your link."
             return
             
         self.status_text = "Downloading..."
